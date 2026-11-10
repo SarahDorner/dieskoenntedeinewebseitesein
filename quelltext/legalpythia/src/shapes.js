@@ -390,3 +390,213 @@ export function shuffle(a, R) {
   }
   return a;
 }
+
+/* ---------------- Legal Pythia logo eye (from their SVG, viewBox 24) ---------------- */
+// path: M2.5 12C6 5.5 9.2 3.6 12 3.6s6 1.9 9.5 8.4C18 18.5 14.8 20.4 12 20.4S6 18.5 2.5 12Z, circle r 3.1
+const LOGO_CURVES = [
+  [[2.5, 12], [6, 5.5], [9.2, 3.6], [12, 3.6]],
+  [[12, 3.6], [14.8, 3.6], [18, 5.5], [21.5, 12]],
+  [[21.5, 12], [18, 18.5], [14.8, 20.4], [12, 20.4]],
+  [[12, 20.4], [9.2, 20.4], [6, 18.5], [2.5, 12]],
+];
+function cubic(c, t) {
+  const u = 1 - t;
+  const a = u * u * u, b = 3 * u * u * t, d = 3 * u * t * t, e = t * t * t;
+  return [a * c[0][0] + b * c[1][0] + d * c[2][0] + e * c[3][0], a * c[0][1] + b * c[1][1] + d * c[2][1] + e * c[3][1]];
+}
+// returns points of the logo eye in units where the eye is `width` wide, centred at 0
+export function logoEyePoints(width, spacing, R, type) {
+  const s = width / 19;
+  const pts = [];
+  const stroke = 1.8 * s;
+  LOGO_CURVES.forEach((c) => {
+    let len = 0, prev = cubic(c, 0);
+    for (let i = 1; i <= 40; i++) { const q = cubic(c, i / 40); len += Math.hypot(q[0] - prev[0], q[1] - prev[1]); prev = q; }
+    const n = Math.max(8, Math.round((len * s) / spacing));
+    for (let i = 0; i < n; i++) {
+      const [x, y] = cubic(c, i / n);
+      for (let j = 0; j < 3; j++) {
+        const off = (j - 1) * stroke * 0.36 + (R() - 0.5) * stroke * 0.2;
+        // normal of the almond: approx towards centre
+        const nx = x - 12, ny = y - 12, nl = Math.hypot(nx, ny) || 1;
+        pts.push([(x - 12) * s + (nx / nl) * off, -(y - 12) * s - (ny / nl) * off, 0, type, 0, 0, 0]);
+      }
+    }
+  });
+  // filled pupil
+  const pr = 3.1 * s;
+  for (let x = -pr; x <= pr; x += spacing * 1.15)
+    for (let y = -pr; y <= pr; y += spacing * 1.15)
+      if (x * x + y * y <= pr * pr) pts.push([x + (R() - 0.5) * spacing * 0.3, y + (R() - 0.5) * spacing * 0.3, 0, type, 0, 0, 0]);
+  return pts;
+}
+
+/* ---------------- Seal: fixed price, pressed into wax ---------------- */
+// type: 0 dust, 1 rings, 2 ring text, 3 logo eye, 4 wax body
+export function buildSeal(k, R) {
+  const P = [];
+  const sq = Math.sqrt(k);
+  // wax body with an irregular edge
+  const edge = (th) => 1.08 + 0.035 * Math.sin(5 * th + 1.3) + 0.02 * Math.sin(11 * th + 0.4) + 0.012 * Math.sin(23 * th);
+  const fs = 0.03 / sq;
+  for (let x = -1.15; x <= 1.15; x += fs)
+    for (let y = -1.15; y <= 1.15; y += fs) {
+      const r = Math.hypot(x, y), th = Math.atan2(y, x);
+      if (r <= edge(th)) P.push([x + (R() - 0.5) * fs * 0.8, y + (R() - 0.5) * fs * 0.8, -0.01, 4, r, 0, 0]);
+    }
+  // rings
+  [[0.98, 0.0075], [0.95, 0.0085], [0.665, 0.0085], [0.64, 0.009]].forEach(([r0, st]) => {
+    const n = Math.round((2 * Math.PI * r0) / (st / k));
+    for (let i = 0; i < n; i++) {
+      const th = (i / n) * Math.PI * 2;
+      const rr = r0 + (R() - 0.5) * 0.006;
+      P.push([Math.cos(th) * rr, Math.sin(th) * rr, 0, 1, r0, 0, 0]);
+    }
+  });
+  // engraved wave ring, the same guilloche motif as the big eye
+  [0, Math.PI].forEach((ph) => {
+    const n = Math.round((2 * Math.PI * 0.81) / (0.006 / k));
+    for (let i = 0; i < n; i++) {
+      const th = (i / n) * Math.PI * 2;
+      const r = 0.805 + 0.085 * Math.sin(16 * th + ph);
+      P.push([Math.cos(th) * r, Math.sin(th) * r, 0.01, 2, 0, 0, 0]);
+    }
+  });
+  // Legal Pythia eye in the middle
+  logoEyePoints(1.0, 0.0065 / k, R, 3).forEach((p) => P.push(p));
+  return { primary: P, secondary: [] };
+}
+
+/* ---------------- App interface: the software side ---------------- */
+// type: 0 dust, 1 lines/outlines, 2 text, 3 flag band, 4 soft fill, 5 chart line, 6 flagged text
+export function buildApp(k, R, wide) {
+  const P = [];
+  const sq = Math.sqrt(k);
+  const ls = 0.011 / k;
+  const sp = 0.0125 / sq;
+  const anchors = {};
+  const seg = (x0, y0, x1, y1, type = 1, step = ls) => {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    const n = Math.max(2, Math.round(L / step));
+    for (let i = 0; i <= n; i++) { const t = i / n; P.push([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, 0, type, 0, 0, 0]); }
+  };
+  const arc = (cx, cy, r, a0, a1, type = 1) => {
+    const n = Math.max(3, Math.round((Math.abs(a1 - a0) * r) / ls));
+    for (let i = 0; i <= n; i++) { const a = a0 + ((a1 - a0) * i) / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r, 0, type, 0, 0, 0]); }
+  };
+  const rrect = (x0, y0, x1, y1, r, type = 1) => {
+    seg(x0 + r, y1, x1 - r, y1, type); seg(x1, y1 - r, x1, y0 + r, type);
+    seg(x1 - r, y0, x0 + r, y0, type); seg(x0, y0 + r, x0, y1 - r, type);
+    arc(x1 - r, y1 - r, r, 0, Math.PI / 2, type); arc(x0 + r, y1 - r, r, Math.PI / 2, Math.PI, type);
+    arc(x0 + r, y0 + r, r, Math.PI, Math.PI * 1.5, type); arc(x1 - r, y0 + r, r, Math.PI * 1.5, Math.PI * 2, type);
+  };
+  const circle = (cx, cy, r, type = 1) => arc(cx, cy, r, 0, Math.PI * 2, type);
+  const text = (x0, y, len, rows = 2, type = 2, opt = {}) => {
+    let x = x0; const xEnd = x0 + len;
+    while (x < xEnd - 0.012) {
+      let wl = opt.word ?? 0.05 + R() * 0.17;
+      if (x + wl > xEnd) wl = xEnd - x;
+      for (let xx = x; xx <= x + wl; xx += sp)
+        for (let r = 0; r < rows; r++) P.push([xx, y + (r - (rows - 1) / 2) * sp * 0.95, 0, type, 0, 0, 0]);
+      x += wl + (opt.gap ?? 0.032);
+    }
+    return xEnd;
+  };
+  const num = (xRight, y, len, rows = 2, type = 2) => text(xRight - len, y, len, rows, type, { word: 0.042, gap: 0.011 });
+  const fill = (x0, y0, x1, y1, type = 4, step = sp * 1.5) => {
+    for (let x = x0; x <= x1; x += step) for (let y = y0; y <= y1; y += step) P.push([x, y, -0.01, type, 0, 0, 0]);
+  };
+  const chart = (x0, x1, yb, yt, n) => {
+    const vals = [];
+    let v = 0.35;
+    for (let i = 0; i < n; i++) { v += (R() - 0.45) * 0.22; v = Math.min(0.85, Math.max(0.1, v)); vals.push(v); }
+    vals[Math.floor(n * 0.7)] = 0.95;
+    const pts = vals.map((vv, i) => [x0 + ((x1 - x0) * i) / (n - 1), yb + (yt - yb) * vv]);
+    for (let i = 0; i < pts.length - 1; i++) seg(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], 5, ls * 0.8);
+    pts.forEach(([x, y]) => circle(x, y, 0.022, 1));
+    // soft area under the line
+    for (let i = 0; i < pts.length - 1; i++) {
+      for (let x = pts[i][0]; x < pts[i + 1][0]; x += sp * 3) {
+        const t = (x - pts[i][0]) / (pts[i + 1][0] - pts[i][0]);
+        const top = pts[i][1] + (pts[i + 1][1] - pts[i][1]) * t;
+        for (let y = yb; y < top; y += sp * 3) P.push([x, y, -0.01, 4, 0, 0, 0]);
+      }
+    }
+  };
+
+  if (wide) {
+    const X0 = -2.6, X1 = 2.6, Y0 = -1.625, Y1 = 1.625;
+    rrect(X0, Y0, X1, Y1, 0.12);
+    seg(X0, 1.38, X1, 1.38);
+    text(-2.45, 1.5, 0.42, 2);
+    rrect(-0.7, 1.43, 0.75, 1.57, 0.07); text(-0.6, 1.5, 0.45, 1);
+    circle(2.4, 1.5, 0.055);
+    seg(-1.72, 1.38, -1.72, Y0);
+    [0.55, 0.45, 0.6, 0.4, 0.5, 0.42].forEach((l, i) => text(-2.42, 1.18 - i * 0.2, l, 2));
+    fill(-2.52, 1.1, -1.82, 1.26);
+    circle(-2.36, -1.42, 0.07); text(-2.22, -1.42, 0.36);
+    text(-1.55, 1.16, 1.05, 3); text(-1.55, 1.05, 0.8);
+    rrect(1.75, 1.06, 2.45, 1.24, 0.09); text(1.9, 1.15, 0.4);
+    const cw = (4.0 - 0.24) / 3;
+    for (let i = 0; i < 3; i++) {
+      const x = -1.55 + i * (cw + 0.12);
+      rrect(x, 0.36, x + cw, 0.92, 0.06);
+      text(x + 0.1, 0.8, 0.5);
+      text(x + 0.1, 0.61, 0.56, 5, 2, { word: 0.085, gap: 0.02 });
+      text(x + 0.1, 0.46, 0.4, 1);
+    }
+    // chart card
+    rrect(-1.55, -1.5, 0.62, 0.24, 0.06);
+    text(-1.45, 0.12, 0.6, 2);
+    seg(-1.45, -1.32, 0.52, -1.32);
+    [-0.97, -0.62, -0.27].forEach((y) => seg(-1.45, y, 0.52, y, 4, ls * 2.4));
+    chart(-1.4, 0.48, -1.3, -0.15, 12);
+    // table card with one flagged payment
+    rrect(0.74, -1.5, 2.45, 0.24, 0.06);
+    text(0.84, 0.11, 0.42, 2); text(1.52, 0.11, 0.26, 2); num(2.35, 0.11, 0.28, 2);
+    seg(0.84, 0.02, 2.35, 0.02, 1, ls * 1.3);
+    for (let i = 0; i < 7; i++) {
+      const y = -0.12 - i * 0.19;
+      const flagged = i === 3;
+      const t = flagged ? 6 : 2;
+      if (flagged) {
+        for (let x = 0.8; x <= 2.4; x += sp * 1.15) for (let yy = y - 0.065; yy <= y + 0.065; yy += sp * 1.15) P.push([x, yy, -0.01, 3, 0, 0, 0]);
+        anchors.flag = [2.45, y, 0];
+      }
+      text(0.84, y, 0.38 + R() * 0.18, 2, t);
+      text(1.52, y, 0.24, 2, t);
+      num(2.35, y, 0.3, 2, t);
+    }
+  } else {
+    const X0 = -1.0, X1 = 1.0, Y0 = -1.95, Y1 = 1.95;
+    rrect(X0, Y0, X1, Y1, 0.2);
+    text(-0.82, 1.8, 0.22, 1); num(0.84, 1.8, 0.26, 1);
+    text(-0.82, 1.58, 0.95, 3); circle(0.78, 1.6, 0.07);
+    text(-0.82, 1.47, 0.6, 1);
+    [[-0.88, -0.04], [0.04, 0.88]].forEach(([a, b]) => {
+      rrect(a, 0.86, b, 1.34, 0.06);
+      text(a + 0.08, 1.24, 0.42, 1);
+      text(a + 0.08, 1.06, 0.5, 5, 2, { word: 0.08, gap: 0.02 });
+      text(a + 0.08, 0.94, 0.32, 1);
+    });
+    rrect(-0.88, -0.1, 0.88, 0.76, 0.06);
+    text(-0.8, 0.66, 0.5, 2);
+    seg(-0.8, 0.02, 0.8, 0.02);
+    chart(-0.78, 0.78, 0.04, 0.56, 10);
+    for (let i = 0; i < 6; i++) {
+      const y = -0.28 - i * 0.24;
+      const flagged = i === 2;
+      const t = flagged ? 6 : 2;
+      if (flagged) {
+        for (let x = -0.9; x <= 0.9; x += sp * 1.15) for (let yy = y - 0.08; yy <= y + 0.08; yy += sp * 1.15) P.push([x, yy, -0.01, 3, 0, 0, 0]);
+        anchors.flag = [0.94, y, 0];
+      }
+      circle(-0.78, y, 0.05, flagged ? 6 : 1);
+      text(-0.66, y, 0.6 + R() * 0.2, 2, t);
+      num(0.84, y, 0.32, 2, t);
+    }
+    seg(X0, -1.68, X1, -1.68);
+    [-0.6, -0.2, 0.2, 0.6].forEach((x) => circle(x, -1.82, 0.045));
+  }
+  return { primary: P, secondary: [], anchors };
+}

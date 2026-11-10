@@ -21,6 +21,7 @@ const fonts = [
   { fam: 'Bodoni Moda Variable', style: 'normal', w: '400 900', file: '@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2', name: 'bodoni-moda.woff2' },
   { fam: 'Bodoni Moda Variable', style: 'italic', w: '400 900', file: '@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-italic.woff2', name: 'bodoni-moda-italic.woff2' },
   { fam: 'Schibsted Grotesk Variable', style: 'normal', w: '400 900', file: '@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2', name: 'schibsted-grotesk.woff2' },
+  { fam: 'Plus Jakarta Sans Variable', style: 'normal', w: '200 800', file: '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2', name: 'plus-jakarta-sans.woff2' },
 ];
 const face = (f, src) => `@font-face{font-family:'${f.fam}';font-style:${f.style};font-display:swap;font-weight:${f.w};src:url(${src}) format('woff2-variations'),url(${src}) format('woff2');}`;
 
