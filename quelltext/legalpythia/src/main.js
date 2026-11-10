@@ -182,8 +182,8 @@ function layout() {
     const [ex, ey] = toWorld(W / 2, H * 0.3);
     xf.end = { x: ex, y: ey, s: (W * 0.86 * worldPerPx) / eyeW };
   } else {
-    const ecx = W * 0.72;
-    const ew = Math.min(W * (mode === 'wide' ? 0.5 : 0.48), H * 1.0);
+    const ecx = W * 0.735;
+    const ew = Math.min(W * (mode === 'wide' ? 0.46 : 0.44), H * 1.0);
     eyeCenter = [ecx, H * 0.47];
     let [ex, ey] = toWorld(ecx, H * 0.47);
     xf.eye = { x: ex, y: ey, s: (ew * worldPerPx) / eyeW, rx: 0, ry: 0 };

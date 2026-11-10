@@ -78,7 +78,7 @@ h1,h2{font-family:var(--serif);font-weight:500;margin:0;text-wrap:balance}
 h1{font-size:clamp(42px,4.75vw,78px);line-height:.98;letter-spacing:-.018em}
 h2{font-size:clamp(30px,3.15vw,48px);line-height:1.04;letter-spacing:-.012em;margin-bottom:.55em}
 .lede{font-size:18px;color:var(--paper-dim);max-width:33em;margin:.9em 0 1.6em}
-.p-hero .lede{font-size:19px}
+.p-hero .lede{font-size:19px;max-width:min(33em,41vw)}
 .body{color:var(--paper-dim);margin:0 0 1em}
 .small{font-size:14px;color:var(--slate);margin:0}
 .actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px}
@@ -153,7 +153,7 @@ html[data-mode="stacked"] .p-hero{padding-bottom:calc(26px + env(safe-area-inset
 html[data-mode="stacked"] h1{font-size:clamp(38px,10.4vw,52px)}
 html[data-mode="stacked"] h2{font-size:clamp(27px,7.4vw,34px)}
 html[data-mode="stacked"] .lede{font-size:16px;margin:.8em 0 1.3em}
-html[data-mode="stacked"] .p-hero .lede{font-size:16.5px}
+html[data-mode="stacked"] .p-hero .lede{font-size:16.5px;max-width:none}
 html[data-mode="stacked"] .body{font-size:15.5px}
 html[data-mode="stacked"] .proof{display:none}
 html[data-mode="stacked"] .scroll-cue{display:none}
