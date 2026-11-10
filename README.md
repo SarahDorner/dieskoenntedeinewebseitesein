@@ -1,6 +1,6 @@
-# dieskönntedeinewebseitesein.de
+# entwurf.snackable-ads.de
 
-Website-Entwürfe von Snackable Ads, gehostet mit GitHub Pages.
+Website-Entwürfe von Snackable Ads, gehostet mit GitHub Pages unter https://entwurf.snackable-ads.de (DNS: CNAME entwurf auf sarahdorner.github.io bei IONOS).
 
 | Pfad | Entwurf |
 |---|---|
