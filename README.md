@@ -4,6 +4,7 @@ Website-Entwürfe von Snackable Ads, gehostet mit GitHub Pages unter https://ent
 
 | Pfad | Entwurf |
 |---|---|
+| `/auto-schrottplatz/` | Auto-Schrottplatz.de (Autoverwertung Bochum, Abholung deutschlandweit): neue Startseite plus Muster-Ortsseite `/auto-schrottplatz/hamburg/`. Reines HTML und CSS ohne Build, Schriften lokal. Anfrageformular öffnet WhatsApp mit den Angaben |
 | `/legalpythia/` | Legal Pythia, Prototyp mit Partikel-Animation in 7 Kapiteln (Auge, Dokument, Netz, Fallakten, Festpreis-Siegel, Software, Schluss) |
 
 ## Legal Pythia neu bauen
