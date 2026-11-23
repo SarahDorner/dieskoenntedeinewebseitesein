@@ -6,8 +6,10 @@
                                                             und den gelben Entwurfs-Hinweis aus allen Seiten
                                                             und schreibt robots.txt
 
-Achtung: Die Erzeuger stadtseiten.py und ratgeber.py schreiben noindex und den Entwurfs-Hinweis wieder hinein.
-Nach "live" also entweder die Vorlagen dort anpassen oder "live" nach jedem Erzeugen erneut ausführen.
+"live" legt die Schalter-Datei LIVE neben dieses Skript. Solange sie existiert, schalten die Erzeuger
+stadtseiten.py und ratgeber.py nach jedem Lauf von selbst wieder frei (sie rufen nach_erzeugen() auf).
+Zurück in den Entwurf: Datei LIVE löschen und beide Erzeuger neu laufen lassen (index.html, en/ und 404.html
+sind handgepflegt und müssten dann von Hand zurückgestellt werden).
 """
 import datetime
 import pathlib
@@ -16,7 +18,8 @@ import sys
 
 ZIEL = pathlib.Path(__file__).resolve().parents[2] / "auto-schrottplatz"
 DOMAIN = "https://auto-schrottplatz.de"
-NICHT_IN_SITEMAP = {"danke"}
+NICHT_IN_SITEMAP = {"danke", "impressum", "datenschutz"}  # bleiben auch nach dem Livegang auf noindex
+SCHALTER = pathlib.Path(__file__).resolve().parent / "LIVE"  # liegt diese Datei da, ist die Seite live
 
 
 def seiten():
@@ -49,8 +52,22 @@ def live():
         if neu != text:
             datei.write_text(neu, encoding="utf-8")
             n += 1
+    fehler = ZIEL / "404.html"
+    if fehler.exists():
+        text = fehler.read_text(encoding="utf-8")
+        neu = re.sub(r'\n<div class="draft">.*?</div>\n', "\n", text, flags=re.S)
+        if neu != text:
+            fehler.write_text(neu, encoding="utf-8")
+    SCHALTER.write_text("Die Seite ist live. Siehe livegang.py.\n", encoding="utf-8")
     (ZIEL / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n", encoding="utf-8")
     print(f"{n} Seiten freigeschaltet, robots.txt geschrieben")
+
+
+def nach_erzeugen():
+    """Von den Erzeugern am Ende aufgerufen: hält Sitemap und, falls live, die Freischaltung aktuell."""
+    if SCHALTER.exists():
+        live()
+    sitemap()
 
 
 if __name__ == "__main__":

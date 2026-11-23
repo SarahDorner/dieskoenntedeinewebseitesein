@@ -281,3 +281,5 @@ if __name__ == "__main__":
         ziel.parent.mkdir(parents=True, exist_ok=True)
         ziel.write_text(text, encoding="utf-8")
         print("geschrieben:", ziel.relative_to(ZIEL.parent))
+    import livegang
+    livegang.nach_erzeugen()
