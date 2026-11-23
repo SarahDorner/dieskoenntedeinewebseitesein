@@ -1599,6 +1599,14 @@ def seite(s):
         </ul>
       </div>
       <div class="box">
+        <h3>Das bekommst du schriftlich</h3>
+        <ul>
+          <li>Abmeldebescheinigung der Zulassungsstelle</li>
+          <li>Verwertungsnachweis von einem anerkannten Demontagebetrieb</li>
+          <li>Per WhatsApp, E-Mail oder Post, kostenlos</li>
+        </ul>
+      </div>
+      <div class="box">
         <h3>Nicht nur Autos</h3>
         <p>Wir nehmen alles, was auf Reifen läuft: Autos, Transporter, Motorräder und Wohnmobile. In jedem Zustand.</p>
       </div>
