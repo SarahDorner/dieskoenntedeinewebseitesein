@@ -1456,7 +1456,7 @@ def seite(s):
     ld_service = {"@context": "https://schema.org", "@type": "Service", "serviceType": "Autoverwertung mit Abholung",
                   "name": f"Auto verschrotten in {n}",
                   "provider": {"@type": "AutomotiveBusiness", "name": "Auto-Schrottplatz.de",
-                               "telephone": "+4915231344444", "address": ADRESSE},
+                               "telephone": "+4915231344444"},
                   "areaServed": {"@type": "City", "name": n}}
     ld_crumb = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://auto-schrottplatz.de/"},
