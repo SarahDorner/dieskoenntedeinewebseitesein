@@ -69,6 +69,11 @@ input:focus,select:focus{outline:2px solid var(--teal);outline-offset:0;border-c
 .card .alt{margin-top:14px;font-size:15.5px;color:var(--text);text-align:center}
 .card .alt a{font-weight:800;color:var(--ink);white-space:nowrap}
 .card .hint{font-size:13px;color:var(--dim);margin:10px 0 0;text-align:center}
+.card .btn.line{margin-top:10px}
+.card input[type=file]{width:100%;padding:10px;border:1px dashed var(--rule);background:#fff;font:inherit;font-size:15px}
+.card .status{min-height:1.4em;margin:10px 0 0;font-size:15px;font-weight:600;text-align:center}
+.card .status.fehler{color:#b3261e}
+.falle{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
 
 /* Abschnitte */
 section{padding:clamp(50px,7vw,92px) 0}

@@ -27,7 +27,7 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="./"><img src="https://auto-schrottplatz.de/wp-content/uploads/2025/06/Logo_Autoschrottplatz.png" width="250" height="125" alt="Auto-Schrottplatz.de"></a>
+    <a class="logo" href="./"><img src="bilder/logo-auto-schrottplatz.png" width="250" height="125" alt="Auto-Schrottplatz.de"></a>
     <nav class="nav" aria-label="Hauptmenü">
       <a href="./#ablauf">So geht's</a>
       <a href="./#fahrzeuge">Was wir abholen</a>
@@ -53,9 +53,11 @@
       <p class="callline">Am schnellsten geht es am Telefon: <a href="tel:+4915231344444">0152 313 444 44</a></p>
     </div>
 
-    <form class="card" id="anfrage" autocomplete="on">
+    <form class="card" id="anfrage" name="anfrage" method="POST" action="danke/" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="website" autocomplete="on">
+      <input type="hidden" name="form-name" value="anfrage">
+      <p class="falle"><label>Bitte leer lassen <input name="website" tabindex="-1" autocomplete="off"></label></p>
       <h2>Was ist dein Auto noch wert?</h2>
-      <p class="sub">Fünf Angaben reichen für ein Angebot.</p>
+      <p class="sub">Ein paar Angaben reichen für ein Angebot.</p>
       <div class="grid2">
         <div class="field"><label for="marke">Marke</label><input id="marke" name="marke" placeholder="z. B. Ford" required></div>
         <div class="field"><label for="modell">Modell</label><input id="modell" name="modell" placeholder="z. B. Focus" required></div>
@@ -74,8 +76,20 @@
           <option>Ohne TÜV</option>
         </select>
       </div>
-      <button class="btn" type="submit">Angebot per WhatsApp anfragen</button>
-      <p class="hint">Es öffnet sich WhatsApp mit deinen Angaben. Fotos kannst du dort gleich mitschicken.</p>
+      <div class="grid2">
+        <div class="field"><label for="name">Dein Name</label><input id="name" name="name" autocomplete="name"></div>
+        <div class="field"><label for="telefon">Telefon</label><input id="telefon" name="telefon" type="tel" inputmode="tel" placeholder="Für den Rückruf" required autocomplete="tel"></div>
+      </div>
+      <div class="field">
+        <label for="fotos">Fotos vom Auto (bis zu 3, freiwillig)</label>
+        <input id="fotos" type="file" accept="image/*" multiple>
+        <input class="falle" type="file" name="foto1" tabindex="-1" aria-hidden="true"><input class="falle" type="file" name="foto2" tabindex="-1" aria-hidden="true"><input class="falle" type="file" name="foto3" tabindex="-1" aria-hidden="true">
+        <input type="hidden" name="seite" value="">
+      </div>
+      <button class="btn" type="submit">Anfrage senden</button>
+      <button class="btn line per-whatsapp" type="button">Lieber per WhatsApp</button>
+      <p class="status" role="status" aria-live="polite"></p>
+      <p class="hint">Wir nutzen deine Angaben nur, um dir ein Angebot zu machen. Mehr dazu im <a href="datenschutz/">Datenschutz</a>.</p>
     </form>
   </div>
 </div>

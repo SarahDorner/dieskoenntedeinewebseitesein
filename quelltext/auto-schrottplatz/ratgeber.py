@@ -83,7 +83,7 @@ def rahmen(titel, beschreibung, inhalt, ld):
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="./"><img src="https://auto-schrottplatz.de/wp-content/uploads/2025/06/Logo_Autoschrottplatz.png" width="250" height="125" alt="Auto-Schrottplatz.de"></a>
+    <a class="logo" href="./"><img src="bilder/logo-auto-schrottplatz.png" width="250" height="125" alt="Auto-Schrottplatz.de"></a>
     <nav class="nav" aria-label="Hauptmenü">
       <a href="./#ablauf">So geht's</a>
       <a href="./#fahrzeuge">Was wir abholen</a>
@@ -177,8 +177,21 @@ def uebersicht():
                   inhalt, ld)
 
 
+def danke():
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "Danke für deine Anfrage"}
+    inhalt = """<section>
+  <div class="wrap artikel">
+    <h1>Danke, deine Anfrage ist da.</h1>
+    <p class="lead">Wir melden uns so schnell wie möglich bei dir, meist per Anruf oder WhatsApp.</p>
+    <p class="more"><a href="./">Zurück zur Startseite</a></p>
+  </div>
+</section>
+"""
+    return rahmen("Danke für deine Anfrage | Auto-Schrottplatz.de", "Deine Anfrage ist bei uns angekommen.", inhalt, ld)
+
+
 if __name__ == "__main__":
-    seiten = {"ratgeber": uebersicht()}
+    seiten = {"ratgeber": uebersicht(), "danke": danke()}
     seiten.update({b["slug"]: beitrag(b) for b in BEITRAEGE})
     for slug, text in seiten.items():
         ziel = ZIEL / slug / "index.html"
