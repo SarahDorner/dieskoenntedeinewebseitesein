@@ -115,7 +115,7 @@ def rahmen(titel, beschreibung, inhalt, ld):
     <div><b>Auto-Schrottplatz.de</b>Autoverwertung mit kostenloser Abholung<br>in ganz Deutschland</div>
     <div><b>Kontakt</b><a href="{TEL_LINK}">{TEL}</a><a href="{WA}">WhatsApp</a><a href="mailto:{MAIL}">{MAIL}</a></div>
     <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a><a href="en/" lang="en">English</a></div>
-    <div class="legal"><a href="https://auto-schrottplatz.de/impressum/">Impressum</a><a href="https://auto-schrottplatz.de/datenschutz/">Datenschutz</a></div>
+    <div class="legal"><a href="impressum/">Impressum</a><a href="datenschutz/">Datenschutz</a></div>
   </div>
 </footer>
 
@@ -190,8 +190,91 @@ def danke():
     return rahmen("Danke für deine Anfrage | Auto-Schrottplatz.de", "Deine Anfrage ist bei uns angekommen.", inhalt, ld)
 
 
+# Angaben für Impressum und Datenschutz. Stand 23.11.2026: Adam soll im Impressum stehen,
+# die Angaben des alten Impressums (14.09.2026) stimmen laut Sarah.
+FIRMA = "Bochumer Autohandel"
+INHABER = "Adam El Lahib"
+STRASSE = "Dieselstraße 33"
+ORT = "44805 Bochum"
+
+
+def rechtsseite(titel, beschreibung, h1, stand, koerper):
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": h1}
+    inhalt = f"""<section>
+  <div class="wrap artikel">
+    <h1>{h1}</h1>
+    <p class="stand">Stand: {stand}</p>
+    <div class="prose">
+{koerper}
+    </div>
+  </div>
+</section>
+"""
+    return rahmen(titel, beschreibung, inhalt, ld)
+
+
+def impressum():
+    k = f"""<h2>Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)</h2>
+<p>{FIRMA}<br>Inhaber: {INHABER}<br>{STRASSE}<br>{ORT}<br>Deutschland</p>
+
+<h2>Kontakt</h2>
+<p>Telefon: <a href="{TEL_LINK}">{TEL}</a><br>E-Mail: <a href="mailto:{MAIL}">{MAIL}</a><br>Website: www.auto-schrottplatz.de</p>
+
+<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+<p>{INHABER}, {STRASSE}, {ORT}</p>
+
+<h2>Verbraucherschlichtung</h2>
+<p>Wir sind weder verpflichtet noch bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+<h2>Haftung für Inhalte</h2>
+<p>Für die eigenen Inhalte dieser Website sind wir nach den allgemeinen Gesetzen verantwortlich (§ 7 Abs. 1 DDG). Wir sind aber nicht verpflichtet, fremde Informationen zu überwachen, die wir übermitteln oder speichern (§§ 8 bis 10 DDG). Erfahren wir von einer Rechtsverletzung, entfernen wir den betroffenen Inhalt umgehend.</p>
+
+<h2>Haftung für Links</h2>
+<p>Diese Website verlinkt auf Seiten anderer Anbieter, zum Beispiel auf WhatsApp. Auf deren Inhalte haben wir keinen Einfluss, verantwortlich ist der jeweilige Anbieter. Erfahren wir von rechtswidrigen Inhalten auf einer verlinkten Seite, entfernen wir den Link.</p>
+
+<h2>Urheberrecht</h2>
+<p>Texte, Bilder und Gestaltung dieser Website sind urheberrechtlich geschützt. Wer sie über den privaten Gebrauch hinaus nutzen möchte, braucht vorher unsere schriftliche Zustimmung.</p>"""
+    return rechtsseite("Impressum | Auto-Schrottplatz.de", "Impressum von Auto-Schrottplatz.de.", "Impressum", "November 2026", k)
+
+
+def datenschutz():
+    k = f"""<p>Hier steht, welche Daten wir verarbeiten, wenn du diese Website besuchst oder uns eine Anfrage schickst. Kurz gesagt: Wir setzen keine Cookies, messen keine Besucher und nutzen deine Angaben nur, um dir ein Angebot zu machen und dein Fahrzeug abzuholen.</p>
+
+<h2>Wer ist verantwortlich?</h2>
+<p>{INHABER}<br>{FIRMA}<br>{STRASSE}<br>{ORT}<br>Telefon: <a href="{TEL_LINK}">{TEL}</a><br>E-Mail: <a href="mailto:{MAIL}">{MAIL}</a></p>
+
+<h2>Hosting und Server-Protokolle</h2>
+<p>Diese Website liegt bei Netlify (Netlify, Inc., San Francisco, USA). Wenn du eine Seite aufrufst, verarbeitet Netlify technisch notwendige Daten: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Seite und Angaben zu Browser und Gerät. Das ist nötig, um die Seite auszuliefern und sie vor Angriffen zu schützen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DS-GVO. Unser berechtigtes Interesse ist der sichere und stabile Betrieb der Website.</p>
+<p>Netlify verarbeitet Daten auch auf Servern in den USA. Mit Netlify besteht ein Vertrag zur Auftragsverarbeitung.</p>
+
+<h2>Anfrageformular</h2>
+<p>Wenn du das Anfrageformular nutzt, verarbeiten wir deine Angaben: Marke, Modell, Baujahr, Ort, Zustand des Fahrzeugs, deine Telefonnummer, auf Wunsch deinen Namen und bis zu drei Fotos. Wir brauchen sie, um dir einen Preis zu nennen und einen Abholtermin abzustimmen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DS-GVO (Schritte vor einem Vertrag).</p>
+<p>Technisch läuft das Formular über Netlify Forms. Deine Angaben und Fotos werden dort gespeichert und uns per E-Mail zugeschickt. Fotos verkleinert dein Browser vor dem Senden.</p>
+
+<h2>Telefon, E-Mail und WhatsApp</h2>
+<p>Rufst du uns an oder schreibst du uns eine E-Mail, verarbeiten wir deine Angaben, um dein Anliegen zu bearbeiten (Art. 6 Abs. 1 lit. b DS-GVO).</p>
+<p>Die WhatsApp-Knöpfe auf dieser Website sind einfache Links. Erst wenn du darauf tippst, öffnet sich WhatsApp. Ab dann gelten die Datenschutzregeln von WhatsApp (WhatsApp Ireland Limited). Wenn du das nicht möchtest, ruf uns an oder nutze das Formular.</p>
+
+<h2>Cookies, Statistik und Schriften</h2>
+<p>Diese Website setzt keine Cookies und nutzt keine Statistik- oder Werbedienste. Deshalb gibt es auch kein Cookie-Banner. Schriften, Bilder und Skripte laden wir vom eigenen Speicherplatz, nicht von Servern Dritter.</p>
+
+<h2>Weitergabe von Daten</h2>
+<p>Wir verkaufen deine Daten nicht und geben sie nicht zu Werbezwecken weiter. Eine Weitergabe gibt es nur, soweit sie für die Abholung und Verwertung deines Fahrzeugs nötig ist (zum Beispiel an die Zulassungsstelle für die Abmeldung) oder ein Gesetz sie vorschreibt.</p>
+
+<h2>Wie lange speichern wir?</h2>
+<p>Anfragen, aus denen kein Auftrag wird, löschen wir, sobald sie erledigt sind. Kaufverträge und Nachweise bewahren wir so lange auf, wie es Handels- und Steuerrecht verlangen.</p>
+
+<h2>Deine Rechte</h2>
+<p>Du kannst Auskunft über deine gespeicherten Daten verlangen, falsche Angaben berichtigen lassen, die Löschung oder Einschränkung der Verarbeitung verlangen, der Verarbeitung widersprechen und deine Daten in einem gängigen Format erhalten. Schreib uns dafür einfach an <a href="mailto:{MAIL}">{MAIL}</a>.</p>
+<p>Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen.</p>
+
+<h2>Änderungen</h2>
+<p>Wenn sich an der Website etwas ändert, passen wir diese Erklärung an. Hier steht immer die aktuelle Fassung.</p>"""
+    return rechtsseite("Datenschutz | Auto-Schrottplatz.de", "Datenschutzerklärung von Auto-Schrottplatz.de.", "Datenschutz", "November 2026", k)
+
+
 if __name__ == "__main__":
-    seiten = {"ratgeber": uebersicht(), "danke": danke()}
+    seiten = {"ratgeber": uebersicht(), "danke": danke(), "impressum": impressum(), "datenschutz": datenschutz()}
     seiten.update({b["slug"]: beitrag(b) for b in BEITRAEGE})
     for slug, text in seiten.items():
         ziel = ZIEL / slug / "index.html"

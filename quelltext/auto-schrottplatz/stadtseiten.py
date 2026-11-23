@@ -1674,7 +1674,7 @@ def seite(s):
     <div><b>Auto-Schrottplatz.de</b>Autoverwertung mit kostenloser Abholung<br>in ganz Deutschland</div>
     <div><b>Kontakt</b><a href="{TEL_LINK}">{TEL}</a><a href="{WA}">WhatsApp</a><a href="mailto:{MAIL}">{MAIL}</a></div>
     <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a><a href="en/" lang="en">English</a></div>
-    <div class="legal"><a href="https://auto-schrottplatz.de/impressum/">Impressum</a><a href="https://auto-schrottplatz.de/datenschutz/">Datenschutz</a></div>
+    <div class="legal"><a href="impressum/">Impressum</a><a href="datenschutz/">Datenschutz</a></div>
   </div>
 </footer>
 
