@@ -115,6 +115,8 @@ section{padding:clamp(50px,7vw,92px) 0}
 .plate i{flex:none;width:21px;background:#0b3fa8;color:#fff;font:700 10px/1 "Archivo",sans-serif;font-style:normal;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px}
 .plate b{flex:none;display:grid;place-items:center;min-width:46px;padding:0 6px;font:700 26px/1 "Barlow Condensed",sans-serif;border-right:1.5px dashed #bbb}
 .plate span{display:flex;align-items:center;padding:0 10px;font-size:15px;font-weight:600;line-height:1.15}
+.plate span{min-width:0;hyphens:auto;overflow-wrap:anywhere}
+.plate.lang span{font-size:13px;padding:0 7px}
 a.plate:hover{background:#eef9fb}
 a.plate span:after{content:"\2192";margin-left:6px;color:var(--teal-dark)}
 .more{margin:20px 0 0;color:var(--dim);font-size:15.5px;max-width:46em}
