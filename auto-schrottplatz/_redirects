@@ -1,7 +1,7 @@
 # Weiterleitungen der alten Adressen von auto-schrottplatz.de (Netlify).
 # Erzeugt aus quelltext/auto-schrottplatz/weiterleitungen.csv. Nicht von Hand ändern, sondern die CSV pflegen.
 
-/presse/                                      /                            301
+/presse/                                      /ratgeber/                   301
 /anfrage/                                     /#anfrage                    301
 /autoschrottplatz-kontakt/                    /#anfrage                    301
 /albstadt/                                    /#orte                       301
