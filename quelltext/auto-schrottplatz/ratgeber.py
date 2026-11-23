@@ -18,6 +18,18 @@ MAIL = "info@auto-schrottplatz.de"
 
 BEITRAEGE = [
     {
+        "slug": "auto-verschrotten-ohne-papiere",
+        "titel": "Auto verschrotten ohne Papiere: Was tun, wenn Brief oder Schein fehlen?",
+        "kurz": "Welche Unterlagen du für die Verwertung brauchst und wie du Ersatz bekommst, wenn Fahrzeugbrief oder Fahrzeugschein fehlen.",
+        "datum": "2026-11-23",
+    },
+    {
+        "slug": "roter-aufkleber-am-auto",
+        "titel": "Roter Aufkleber am Auto: Was er bedeutet und was du jetzt tun solltest",
+        "kurz": "Der rote Punkt vom Ordnungsamt setzt eine Frist. So vermeidest du Abschleppkosten und wirst dein Auto schnell los.",
+        "datum": "2026-11-23",
+    },
+    {
         "slug": "auto-schrottplatz-de-auf-trustpilot",
         "titel": "auto-schrottplatz.de jetzt auch bei Trustpilot",
         "kurz": "Warum wir aktiv um Bewertungen bitten und wie aus über 20 Jahren Praxis eine digitale Autoverwertung wurde.",
@@ -102,7 +114,7 @@ def rahmen(titel, beschreibung, inhalt, ld):
   <div class="wrap">
     <div><b>Auto-Schrottplatz.de</b>Autoverwertung mit kostenloser Abholung<br>in ganz Deutschland</div>
     <div><b>Kontakt</b><a href="{TEL_LINK}">{TEL}</a><a href="{WA}">WhatsApp</a><a href="mailto:{MAIL}">{MAIL}</a></div>
-    <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a></div>
+    <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a><a href="en/" lang="en">English</a></div>
     <div class="legal"><a href="https://auto-schrottplatz.de/impressum/">Impressum</a><a href="https://auto-schrottplatz.de/datenschutz/">Datenschutz</a></div>
   </div>
 </footer>
@@ -124,11 +136,14 @@ def beitrag(b):
           "author": {"@type": "Organization", "name": "Auto-Schrottplatz.de"},
           "publisher": {"@type": "Organization", "name": "Auto-Schrottplatz.de"},
           "mainEntityOfPage": f"https://auto-schrottplatz.de/{b['slug']}/"}
+    stand = f"Veröffentlicht am {datum(b['datum'])}"
+    if b["datum"] != GEAENDERT:
+        stand += f", überarbeitet am {datum(GEAENDERT)}"
     inhalt = f"""<article>
   <div class="wrap artikel">
     <p class="crumb"><a href="./">Startseite</a> / <a href="ratgeber/">Ratgeber</a></p>
     <h1>{e(b['titel'])}</h1>
-    <p class="stand">Veröffentlicht am {datum(b['datum'])}, überarbeitet am {datum(GEAENDERT)}</p>
+    <p class="stand">{stand}</p>
     <div class="prose">
 {text.rstrip()}
     </div>

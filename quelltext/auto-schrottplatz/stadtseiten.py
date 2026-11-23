@@ -1438,7 +1438,7 @@ def faq(s):
         ("Holt ihr auch aus der Tiefgarage ab?",
          "Ja. Wir holen dein Auto aus der Tiefgarage, vom Hinterhof oder sogar aus dem Graben. Das passende Werkzeug bringen wir mit. Sag uns vorab die Durchfahrtshöhe und ob das Fahrzeug noch rollt."),
         ("Mein Auto steht ohne Zulassung an der Straße. Was nun?",
-         "Abgemeldete Fahrzeuge dürfen nicht im öffentlichen Straßenraum stehen. Melde dich zeitnah, damit wir einen schnellen Abholtermin finden."),
+         "Abgemeldete Fahrzeuge dürfen nicht im öffentlichen Straßenraum stehen. Klebt schon ein roter Aufkleber vom Ordnungsamt am Auto, läuft eine Frist. Melde dich zeitnah, damit wir einen schnellen Abholtermin finden."),
         ("Nehmt ihr nur Autos?",
          "Nein. Wir nehmen alles, was auf Reifen läuft: Autos, Transporter, Motorräder und Wohnmobile."),
     ]
@@ -1647,7 +1647,7 @@ def seite(s):
     <div class="drop"><b>Du möchtest dein Auto selbst bringen?</b>Ruf unsere Hotline an: <a href="{TEL_LINK}">{TEL}</a>. Wir nennen dir die nächste Annahmestelle in deiner Nähe.</div>
     <div><b>Auto-Schrottplatz.de</b>Autoverwertung mit kostenloser Abholung<br>in ganz Deutschland</div>
     <div><b>Kontakt</b><a href="{TEL_LINK}">{TEL}</a><a href="{WA}">WhatsApp</a><a href="mailto:{MAIL}">{MAIL}</a></div>
-    <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a></div>
+    <div><b>Seiten</b><a href="./">Startseite</a><a href="./#orte">Abholgebiete</a><a href="ratgeber/">Ratgeber</a><a href="en/" lang="en">English</a></div>
     <div class="legal"><a href="https://auto-schrottplatz.de/impressum/">Impressum</a><a href="https://auto-schrottplatz.de/datenschutz/">Datenschutz</a></div>
   </div>
 </footer>
