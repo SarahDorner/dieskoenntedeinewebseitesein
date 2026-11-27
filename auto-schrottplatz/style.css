@@ -225,3 +225,15 @@ td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
 .sterne{margin:14px 0 0;font-weight:600}
 .sterne span{color:#e0a100;margin-right:2px}
 .sterne small{display:block;font-weight:500;color:var(--dim);margin-top:2px}
+
+.ueberall{margin:0 0 18px;padding:14px 16px;background:#eef9fb;border-left:5px solid var(--teal-dark);font-size:17px;line-height:1.45}
+.plates .alle{grid-column:1/-1}
+.plates .alle .plate{background:#fff8d6}
+.plates .alle .plate span{font-size:16px;padding:8px 10px;hyphens:manual;overflow-wrap:normal}
+.plates{gap:8px}
+.plate{min-height:38px;border-width:2px;border-radius:5px}
+.plate i{width:16px;font-size:8px;padding-bottom:4px}
+.plate b{min-width:36px;padding:0 5px;font-size:20px}
+.plate span{font-size:14px;padding:0 8px;font-weight:500}
+.plates .alle .plate span{font-size:15px;font-weight:600;padding:8px 10px}
+@media (max-width:520px){.plates{grid-template-columns:1fr 1fr 1fr}.plate i{display:none}.plate b{min-width:30px;font-size:18px;padding:0 4px}.plate span{font-size:13px;padding:0 5px}a.plate span:after{display:none}.plates .alle .plate span{font-size:15px}}
