@@ -49,6 +49,8 @@ def live():
         neu = re.sub(r'\n<div class="draft">.*?</div>\n', "\n", text, flags=re.S)
         if pfad.strip("/") not in NICHT_IN_SITEMAP:
             neu = neu.replace('<meta name="robots" content="noindex, nofollow">\n', "")
+        if 'rel="canonical"' not in neu and "</title>" in neu:
+            neu = neu.replace("</title>", f'</title>\n<link rel="canonical" href="{DOMAIN}/{pfad}">', 1)
         if neu != text:
             datei.write_text(neu, encoding="utf-8")
             n += 1
