@@ -220,6 +220,9 @@ def impressum():
 <h2>Kontakt</h2>
 <p>Telefon: <a href="{TEL_LINK}">{TEL}</a><br>E-Mail: <a href="mailto:{MAIL}">{MAIL}</a><br>Website: www.auto-schrottplatz.de</p>
 
+<h2>Umsatzsteuer-ID</h2>
+<p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE453941222</p>
+
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 <p>{INHABER}, {STRASSE}, {ORT}</p>
 
