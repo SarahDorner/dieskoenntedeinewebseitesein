@@ -221,3 +221,7 @@ td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
   .hero .cta .btn{width:100%}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.sterne{margin:14px 0 0;font-weight:600}
+.sterne span{color:#e0a100;margin-right:2px}
+.sterne small{display:block;font-weight:500;color:var(--dim);margin-top:2px}
